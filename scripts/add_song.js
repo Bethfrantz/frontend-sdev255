@@ -1,17 +1,19 @@
-addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {
     document.querySelector("#addBtn").addEventListener("click", addSong)
 })
 
 //add the song to the database..It has to be ana async function because we are calling data outside the server
 async function addSong(){
+    
     //create a song object based on the form that the user fills out. This will make life easier when we send the data to the backend
     const song = {
         title: document.querySelector("#title").value,
         artist: document.querySelector("#artist").value,
         popularity: document.querySelector("#popularity").value,
         releaseDate: document.querySelector("#released").value,
-        genre: document.querySelector("#genre").value ? document.querySelector("#genre").value.split(",") : []
-    }
+        genre: document.querySelector("#genre").value ? document.querySelector("#genre").value.split(",") : [],
+        username: localStorage.getItem("uname")
+    };
     const response = await fetch("http://localhost:3000/api/songs", {
         method: "POST",
         headers: {
